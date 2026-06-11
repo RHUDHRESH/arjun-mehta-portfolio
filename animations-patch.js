@@ -48,30 +48,7 @@
     }
 
     const pathField = qs('#sourcePath');
-    const sectionField = qs('#sourceSection');
     if (pathField) pathField.value = location.pathname + location.search;
-
-    const links = qsa('.chapter-rail a');
-    if (sectionField && links.length && 'IntersectionObserver' in window) {
-      const sections = links
-        .map((a) => {
-          const id = a.getAttribute('href')?.slice(1);
-          return id ? document.getElementById(id) : null;
-        })
-        .filter(Boolean);
-
-      new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          sectionField.value = entry.target.id;
-          links.forEach((a) => {
-            const match = a.getAttribute('href') === '#' + entry.target.id;
-            if (match) a.setAttribute('aria-current', 'section');
-            else a.removeAttribute('aria-current');
-          });
-        });
-      }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 }).observe(...sections);
-    }
   }
 
   function patchLightboxStrip() {

@@ -16,13 +16,18 @@ def _send_resend(record: dict) -> bool:
     if not key:
         return False
 
+    source = record.get("source_section") or "—"
+    if record.get("source_path"):
+        source = f"{record['source_path']} ({source})"
+
     body = (
         f"<p><strong>New commission inquiry</strong></p>"
         f"<p>Names: {record['name']}<br>"
         f"Email: {record['email']}<br>"
         f"Date: {record['date']}<br>"
         f"Venue: {record['venue']}<br>"
-        f"Package: {record.get('package') or '—'}</p>"
+        f"Package: {record.get('package') or '—'}<br>"
+        f"Source: {source}</p>"
         f"<p>{record.get('message') or '—'}</p>"
     )
 
@@ -62,7 +67,10 @@ class handler(BaseHTTPRequestHandler):
         name = (data.get("name") or "").strip()
         email = (data.get("email") or "").strip()
         date = (data.get("date") or "").strip()
+        date_flexible = bool(data.get("dateFlexible"))
         venue = (data.get("venue") or "").strip()
+        if not date and date_flexible:
+            date = "Not yet finalised"
         if len(name) < 2 or "@" not in email or len(venue) < 2 or not date:
             self._json(422, {"detail": "Missing required fields"})
             return
@@ -75,6 +83,8 @@ class handler(BaseHTTPRequestHandler):
             "venue": venue,
             "package": (data.get("package") or "").strip(),
             "message": (data.get("message") or "").strip(),
+            "source_path": (data.get("sourcePath") or "").strip(),
+            "source_section": (data.get("sourceSection") or "").strip(),
         }
 
         try:

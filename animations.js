@@ -112,7 +112,10 @@
 
     if (!sections.length) return;
 
+    const sectionField = qs('#sourceSection');
+
     const setActive = (id) => {
+      if (sectionField) sectionField.value = id;
       links.forEach((a) => {
         const match = a.getAttribute('href') === `#${id}`;
         a.classList.toggle('is-active', match);
@@ -239,6 +242,11 @@
     let items = [];
     try { items = JSON.parse(dataEl.textContent); } catch (_) { return; }
 
+    const thumbSrc = (src) => {
+      if (!src || src.includes('-sm.webp') || src.includes('-lq.webp')) return src;
+      return src.endsWith('.webp') ? src.replace(/\.webp$/, '-sm.webp') : src;
+    };
+
     const img = qs('.lightbox__img', box);
     const cap = qs('.lightbox__cap', box);
     let idx = 0;
@@ -252,7 +260,14 @@
       thumb.className = 'lightbox__strip-thumb';
       thumb.dataset.index = String(i);
       thumb.setAttribute('aria-label', `View photo ${i + 1}`);
-      thumb.innerHTML = `<img src="${item.src.replace('.webp', '-sm.webp')}" alt="" width="44" height="44" loading="lazy">`;
+      const thumbImg = document.createElement('img');
+      thumbImg.src = thumbSrc(item.src);
+      thumbImg.alt = '';
+      thumbImg.width = 44;
+      thumbImg.height = 44;
+      thumbImg.loading = 'lazy';
+      thumbImg.addEventListener('error', () => { thumbImg.src = item.src; }, { once: true });
+      thumb.appendChild(thumbImg);
       strip.appendChild(thumb);
     });
     const imgWrap = img?.parentNode;
@@ -316,10 +331,12 @@
       }
 
       const fd = new FormData(form);
+      const dateFlexible = qs('#date-flexible')?.checked ?? false;
       const payload = {
         name: String(fd.get('name') || '').trim(),
         email: String(fd.get('email') || '').trim(),
         date: String(fd.get('date') || '').trim(),
+        dateFlexible,
         venue: String(fd.get('venue') || '').trim(),
         package: String(fd.get('package') || '').trim(),
         message: String(fd.get('message') || '').trim(),
@@ -327,7 +344,8 @@
         sourceSection: String(fd.get('sourceSection') || '').trim(),
       };
 
-      if (!payload.name || !payload.email || !payload.date || !payload.venue) {
+      const dateOk = payload.date || dateFlexible;
+      if (!payload.name || !payload.email || !dateOk || !payload.venue) {
         if (status) {
           status.textContent = 'Please complete all required fields.';
           status.classList.add('is-error');
