@@ -12,9 +12,9 @@
   --color-oxblood: #4A1F22;
   --color-copper: #B5683B;
   --color-copper-soft: #E8C9B0;
-  --color-taupe: #8C7A6E;
+  --color-taupe: #5E5047;
   --color-success: #4A6B4A;
-  --color-wash: color-mix(in srgb, var(--color-copper-soft) 22%, var(--color-ivory));
+  --color-wash: #F2EAE0;
   --color-divider: var(--color-copper-soft);
 
   /* Typography */
@@ -305,7 +305,7 @@ button {
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--color-taupe);
+  color: var(--color-ink);
   border-right: 1px solid var(--color-divider);
   border-bottom: 1px solid var(--color-divider);
   transition: color 0.2s, background 0.2s;
@@ -1045,14 +1045,33 @@ button {
 .mosaic-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-md);
+  gap: var(--space-lg) var(--space-md);
   max-width: var(--content-max);
   margin-inline: auto;
 }
 
 @media (min-width: 768px) {
   .mosaic-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(12, 1fr);
+    align-items: start;
+  }
+
+  .mosaic-tile:nth-child(1) {
+    grid-column: 1 / 7;
+    margin-top: var(--space-lg);
+  }
+
+  .mosaic-tile:nth-child(2) {
+    grid-column: 8 / 13;
+  }
+
+  .mosaic-tile:nth-child(3) {
+    grid-column: 2 / 7;
+  }
+
+  .mosaic-tile:nth-child(4) {
+    grid-column: 7 / 13;
+    margin-top: calc(var(--space-xl) * -1);
   }
 }
 

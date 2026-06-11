@@ -116,6 +116,8 @@
       links.forEach((a) => {
         const match = a.getAttribute('href') === `#${id}`;
         a.classList.toggle('is-active', match);
+        if (match) a.setAttribute('aria-current', 'section');
+        else a.removeAttribute('aria-current');
       });
     };
 
@@ -178,15 +180,45 @@
     const panels = qsa('.realm-panel');
     if (!tabs.length || !panels.length) return;
 
+    const syncTabIndex = (activeTab) => {
+      tabs.forEach((t) => {
+        t.tabIndex = t === activeTab ? 0 : -1;
+      });
+    };
+
+    syncTabIndex(tabs.find((t) => t.getAttribute('aria-selected') === 'true') || tabs[0]);
+
     tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
         const realm = tab.dataset.realm;
         tabs.forEach((t) => t.setAttribute('aria-selected', String(t === tab)));
+        syncTabIndex(tab);
+
         panels.forEach((panel) => {
           const active = panel.dataset.realm === realm;
           panel.classList.toggle('is-active', active);
           panel.hidden = !active;
-          if (active && !prefersReduced) {
+
+          if (active && !prefersReduced && hasGsap) {
+            const textBlock = qs('.realm-panel__copy', panel);
+            const mainHero = qs('.realm-panel__hero', panel);
+            const thumbnails = qsa('.realm-panel__thumbs figure', panel);
+
+            gsap.killTweensOf([textBlock, mainHero, thumbnails]);
+            gsap.set([textBlock, mainHero, thumbnails], { opacity: 0, y: 25 });
+            gsap.to([textBlock, mainHero, ...thumbnails], {
+              opacity: 1,
+              y: 0,
+              duration: 0.85,
+              stagger: 0.12,
+              ease: 'power2.out',
+              clearProps: 'transform',
+            });
+
+            qsa('.folio-reveal', panel).forEach((el) => {
+              if (!el.classList.contains('is-visible')) revealElement(el);
+            });
+          } else if (active && !prefersReduced) {
             qsa('.folio-reveal', panel).forEach((el) => {
               if (!el.classList.contains('is-visible')) revealElement(el);
             });
@@ -211,6 +243,21 @@
     const cap = qs('.lightbox__cap', box);
     let idx = 0;
 
+    const strip = document.createElement('div');
+    strip.className = 'lightbox__strip';
+    strip.setAttribute('aria-label', 'Gallery thumbnails');
+    items.forEach((item, i) => {
+      const thumb = document.createElement('button');
+      thumb.type = 'button';
+      thumb.className = 'lightbox__strip-thumb';
+      thumb.dataset.index = String(i);
+      thumb.setAttribute('aria-label', `View photo ${i + 1}`);
+      thumb.innerHTML = `<img src="${item.src.replace('.webp', '-sm.webp')}" alt="" width="44" height="44" loading="lazy">`;
+      strip.appendChild(thumb);
+    });
+    const imgWrap = img?.parentNode;
+    if (imgWrap) imgWrap.insertBefore(strip, img.nextSibling);
+
     const show = (i) => {
       idx = (i + items.length) % items.length;
       const item = items[idx];
@@ -220,7 +267,12 @@
       box.classList.add('is-open');
       box.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      document.dispatchEvent(new CustomEvent('folio-lightbox-change', { detail: { index: idx } }));
     };
+
+    document.addEventListener('folio-lightbox-go', (e) => {
+      if (box.classList.contains('is-open')) show(e.detail?.index ?? 0);
+    });
 
     const close = () => {
       box.classList.remove('is-open');
@@ -271,6 +323,8 @@
         venue: String(fd.get('venue') || '').trim(),
         package: String(fd.get('package') || '').trim(),
         message: String(fd.get('message') || '').trim(),
+        sourcePath: String(fd.get('sourcePath') || location.pathname).trim(),
+        sourceSection: String(fd.get('sourceSection') || '').trim(),
       };
 
       if (!payload.name || !payload.email || !payload.date || !payload.venue) {
@@ -333,6 +387,10 @@
       initReveals();
       restoreHash();
     });
+  }
+
+  if (location.hostname === 'localhost' || location.search.includes('debug=1')) {
+    window.folio = { initReveals, initLightbox, initRealmTabs, initArchIntro };
   }
 
   if (document.readyState === 'loading') {

@@ -1,0 +1,328 @@
+/* ══════════════════════════════════════════════════════════════
+   ARJUN MEHTA — FRONT-END UPGRADE PATCHES
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 1. LQIP ── */
+.lqip-wrap { position: relative; overflow: hidden; }
+.lqip-wrap::before {
+  content: ""; position: absolute; inset: 0; z-index: 0;
+  background-image: var(--lqip-url); background-size: cover;
+  background-position: center; filter: blur(18px) saturate(0.9);
+  transform: scale(1.08); transition: opacity 0.5s ease;
+}
+.lqip-wrap.is-loaded::before { opacity: 0; }
+.lqip-wrap img, .lqip-wrap picture { position: relative; z-index: 1; }
+
+.lqip-wrap.folio-hero__media {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.mosaic-tile .lqip-wrap {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── 2. HERO Ken Burns ── */
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .folio-hero__img {
+    animation: hero-drift 28s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+  @keyframes hero-drift {
+    from { transform: scale(1) translateY(0); }
+    to   { transform: scale(1.04) translateY(-10px); }
+  }
+}
+
+.folio-hero::after {
+  background: linear-gradient(
+    180deg,
+    rgba(43, 30, 28, 0.15) 0%,
+    rgba(43, 30, 28, 0.05) 35%,
+    rgba(43, 30, 28, 0.72) 100%
+  );
+}
+
+@media (min-width: 1024px) {
+  .folio-hero__copy { max-width: 13ch; }
+}
+
+@media (max-width: 480px) {
+  .folio-hero__copy .folio-title {
+    font-size: clamp(1.85rem, 8.5vw, 2.5rem);
+    line-height: 1.12;
+    margin-top: 0.35rem;
+  }
+  .folio-hero__copy .kicker { margin-bottom: 0.65rem; }
+  .folio-hero__copy .folio-rule { margin: 0.85rem 0 1rem; }
+}
+
+/* ── 3. HEADER glass over hero ── */
+.folio-header:not(.is-scrolled) {
+  background: rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* ── 4. CHAPTER RAIL tooltips ── */
+.chapter-rail a { position: relative; }
+.chapter-rail a::after {
+  content: attr(data-label); position: absolute;
+  right: calc(100% + 0.55rem); top: 50%; transform: translateY(-50%);
+  font-family: var(--font-body); font-size: 0.52rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--color-oxblood); white-space: nowrap;
+  opacity: 0; pointer-events: none; transition: opacity 0.18s ease;
+}
+.chapter-rail a:hover::after,
+.chapter-rail a.is-active::after { opacity: 1; }
+
+@media (min-width: 1400px) {
+  .chapter-rail a::before { width: 9px; height: 9px; }
+  .chapter-rail a span { font-size: 0.62rem; letter-spacing: 0.14em; }
+}
+
+/* ── 5. PROMISE CARDS ── */
+.promise-card {
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
+  border-color: rgba(232, 201, 176, 0.12);
+}
+.promise-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 44px rgba(43, 30, 28, 0.15);
+}
+
+.promise-card__beat {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(232, 201, 176, 0.55);
+}
+
+@media (min-width: 1024px) {
+  .promise-track { gap: var(--space-lg); }
+}
+
+/* ── 6. VOWS GRID hero spans ── */
+@media (min-width: 768px) {
+  .promise-grid__item:nth-child(1),
+  .promise-grid__item:nth-child(5) { grid-column: span 2; }
+  .promise-grid__item:nth-child(1) .promise-grid__figure,
+  .promise-grid__item:nth-child(5) .promise-grid__figure { aspect-ratio: 16 / 9; }
+  .promise-grid__item:nth-child(3n) .promise-grid__body {
+    background: var(--color-wash);
+    padding: var(--space-sm);
+  }
+}
+
+.folio-spread__text { max-width: 60ch; }
+
+/* ── 7. REALM TABS ── */
+.realm-tabs button { position: relative; display: flex; align-items: center; }
+.realm-tabs button::after {
+  content: ""; position: absolute; bottom: -1px; left: 50%;
+  width: 100%; height: 2px; background: var(--color-copper);
+  transform: translateX(-50%) scaleX(0); transform-origin: center;
+  transition: transform 0.28s var(--ease-out);
+}
+.realm-tabs button:hover::after { transform: translateX(-50%) scaleX(0.55); }
+.realm-tabs button[aria-selected="true"]::after { transform: translateX(-50%) scaleX(1); }
+.realm-tabs button[aria-selected="true"] { border-bottom-color: transparent; }
+
+.realm-tab__thumb {
+  display: inline-block; width: 1.6rem; height: 1.6rem; border-radius: 50%;
+  background-size: cover; background-position: center;
+  margin-right: 0.4rem; flex-shrink: 0;
+  border: 1px solid rgba(181, 104, 59, 0.3);
+}
+
+/* ── 8. MOSAIC captions + lift ── */
+.mosaic-tile {
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
+}
+.mosaic-tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 52px rgba(43, 30, 28, 0.18);
+}
+
+.mosaic-tile__cap {
+  transform: translateY(0);
+  background: linear-gradient(transparent, rgba(74, 31, 34, 0.82));
+}
+
+.mosaic-tile__sub {
+  display: block;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.28s var(--ease-out), transform 0.28s var(--ease-out);
+}
+
+.mosaic-tile:hover .mosaic-tile__sub,
+.mosaic-tile:focus-visible .mosaic-tile__sub {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (min-width: 768px) {
+  .mosaic-tile:first-child { aspect-ratio: 16 / 7; }
+}
+
+/* ── 9. PATH timeline ── */
+.path-steps { position: relative; }
+.path-steps::before {
+  content: ""; position: absolute; top: 0; left: 1.3rem; bottom: 0; width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--color-copper-soft) 10%, var(--color-copper-soft) 90%, transparent);
+  pointer-events: none;
+}
+.path-step__n { transition: color 0.28s ease, transform 0.28s ease; }
+.path-step:hover .path-step__n { color: var(--color-oxblood); transform: scale(1.12); }
+
+/* ── 10. LETTER sticky portrait ── */
+@media (min-width: 768px) {
+  .folio-letter__portrait {
+    position: sticky;
+    top: calc(var(--header-h) + 2rem);
+    align-self: start;
+  }
+  .arch-frame--portrait {
+    max-width: 18rem;
+    margin-left: -1.5rem;
+  }
+}
+
+.folio-letter__signature {
+  display: block;
+  margin-top: 0.75rem;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 1.35rem;
+  color: var(--color-copper);
+  opacity: 0.85;
+}
+
+/* ── 11. COMMISSION ── */
+.commission-card {
+  border-top: 3px solid var(--color-copper);
+  position: relative;
+  overflow: hidden;
+}
+
+.commission-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--commission-bg, none);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.06;
+  filter: grayscale(1);
+  pointer-events: none;
+}
+
+.commission-card > * { position: relative; z-index: 1; }
+
+@media (min-width: 768px) {
+  .commission-card__grid {
+    border-top: 1px solid rgba(181, 104, 59, 0.35);
+    padding-top: 2rem;
+    align-items: start;
+  }
+  .commission-aside__label,
+  .commission-card__head .kicker { margin-top: 0; }
+}
+
+/* ── 12. LIGHTBOX darkroom ── */
+.lightbox__bg::after {
+  content: ""; position: absolute; inset: 0; opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  pointer-events: none;
+}
+
+.lightbox__strip { display: none; }
+
+@media (min-width: 768px) {
+  .lightbox__strip {
+    display: flex; gap: 0.45rem; justify-content: center; margin-top: 0.9rem;
+    overflow-x: auto; max-width: min(90vw, 56rem); scrollbar-width: none;
+  }
+  .lightbox__strip::-webkit-scrollbar { display: none; }
+  .lightbox__strip-thumb {
+    flex-shrink: 0; width: 2.8rem; height: 2.8rem; overflow: hidden;
+    opacity: 0.45; border: 1px solid transparent; cursor: pointer;
+    background: none; padding: 0;
+    transition: opacity 0.2s, border-color 0.2s;
+  }
+  .lightbox__strip-thumb:hover,
+  .lightbox__strip-thumb.is-active { opacity: 1; border-color: var(--color-copper); }
+  .lightbox__strip-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+}
+
+/* ── 13. REVEAL VARIANTS ── */
+.folio-reveal[data-anim="right"] { opacity: 0; transform: translateX(22px); }
+.folio-reveal[data-anim="zoom"]  { opacity: 0; transform: scale(0.97); }
+.folio-reveal[data-anim="right"].is-visible,
+.folio-reveal[data-anim="zoom"].is-visible {
+  opacity: 1; transform: none;
+  transition: opacity var(--duration-reveal) var(--ease-reveal),
+              transform var(--duration-reveal) var(--ease-reveal);
+}
+
+/* ── 14. FOCUS STATES ── */
+.realm-tabs button:focus-visible,
+.btn:focus-visible,
+.commission-link:focus-visible,
+[data-lightbox]:focus-visible {
+  outline: 2px solid var(--color-copper);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ── 15. MOBILE MARQUEE ── */
+@media (max-width: 640px) and (prefers-reduced-motion: no-preference) {
+  .folio-aspirations__words {
+    flex-wrap: nowrap;
+    overflow: hidden;
+    width: max-content;
+    animation: marquee-scroll 18s linear infinite;
+  }
+  @keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+}
+
+/* ── 16–18. MISC POLISH ── */
+.folio-footer { border-top: 1px solid rgba(181, 104, 59, 0.28); }
+
+.field__hint {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.68rem;
+  color: var(--color-taupe);
+  letter-spacing: 0.04em;
+  opacity: 0.82;
+}
+
+.btn--copper.folio-hero__cta {
+  transition: background 0.22s var(--ease-out), color 0.22s var(--ease-out),
+              box-shadow 0.22s var(--ease-out), transform 0.22s var(--ease-out);
+}
+
+.btn--copper.folio-hero__cta:not(:hover) { transition-duration: 0.38s; }
+
+.btn--copper.folio-hero__cta:hover {
+  box-shadow: 0 10px 28px rgba(181, 104, 59, 0.35);
+}
+
+.chapter-rail a[href="#contact"].is-active::before,
+.chapter-rail a[href="#contact"]:hover::before {
+  background: var(--color-copper);
+}

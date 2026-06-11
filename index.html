@@ -34,6 +34,7 @@
   </style>
 
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-patch.css">
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to content</a>
@@ -72,41 +73,43 @@
 
   <!-- Chapter rail — folio page markers -->
   <nav class="chapter-rail" aria-label="Chapter markers">
-    <a href="#home" data-chapter="home"><span>01</span></a>
-    <a href="#manifesto" data-chapter="manifesto"><span>02</span></a>
-    <a href="#promise" data-chapter="promise"><span>03</span></a>
-    <a href="#vows" data-chapter="vows"><span>04</span></a>
-    <a href="#stories" data-chapter="stories"><span>05</span></a>
-    <a href="#portfolio" data-chapter="portfolio"><span>06</span></a>
-    <a href="#experience" data-chapter="experience"><span>07</span></a>
-    <a href="#about" data-chapter="about"><span>08</span></a>
-    <a href="#contact" data-chapter="contact"><span>09</span></a>
+    <a href="#home" data-chapter="home" data-label="Cover"><span>01</span></a>
+    <a href="#manifesto" data-chapter="manifesto" data-label="Stakes"><span>02</span></a>
+    <a href="#promise" data-chapter="promise" data-label="Promise"><span>03</span></a>
+    <a href="#vows" data-chapter="vows" data-label="Guide"><span>04</span></a>
+    <a href="#stories" data-chapter="stories" data-label="Realms"><span>05</span></a>
+    <a href="#portfolio" data-chapter="portfolio" data-label="Work"><span>06</span></a>
+    <a href="#experience" data-chapter="experience" data-label="Path"><span>07</span></a>
+    <a href="#about" data-chapter="about" data-label="Letter"><span>08</span></a>
+    <a href="#contact" data-chapter="contact" data-label="Commission"><span>09</span></a>
   </nav>
 
   <main id="main">
 
     <!-- 01 Cover — full-bleed hero -->
     <section class="folio-hero" id="home" aria-labelledby="hero-title">
-      <picture class="folio-hero__media">
-        <source srcset="images/A6.webp" type="image/webp" media="(min-width: 1280px)">
-        <source srcset="images/A6-md.webp" type="image/webp" media="(min-width: 768px)">
-        <img
-          class="folio-hero__img"
-          src="images/A6-sm.webp"
-          alt="Bride in blush lehenga walking through palace courtyard at golden hour"
-          width="1920"
-          height="1080"
-          decoding="async"
-          fetchpriority="high"
-        >
-      </picture>
+      <div class="lqip-wrap folio-hero__media" style="--lqip-url:url('images/A6-lq.webp')">
+        <picture>
+          <source srcset="images/A6.webp" type="image/webp" media="(min-width: 1280px)">
+          <source srcset="images/A6-md.webp" type="image/webp" media="(min-width: 768px)">
+          <img
+            class="folio-hero__img"
+            src="images/A6-sm.webp"
+            alt="Bride in blush lehenga walking through palace courtyard at golden hour"
+            width="1920"
+            height="1080"
+            decoding="async"
+            fetchpriority="high"
+          >
+        </picture>
+      </div>
       <div class="folio-hero__copy">
         <p class="kicker">Luxury Fine Art Wedding Photography</p>
         <div class="folio-rule" aria-hidden="true"></div>
         <h1 class="folio-title" id="hero-title">You deserve to remember how it felt — not just how it looked.</h1>
         <p class="folio-lead">Fine art heirlooms for brides who refuse to let the day fade.</p>
         <p class="folio-meta">Jaipur · Worldwide</p>
-        <a href="#contact" class="btn btn--copper">Begin Your Story</a>
+        <a href="#contact" class="btn btn--copper folio-hero__cta">Begin Your Story</a>
       </div>
     </section>
 
@@ -120,7 +123,7 @@
           <p class="folio-body">Fine Art · Jaipur · Worldwide</p>
         </div>
         <figure class="folio-spread__inset folio-reveal" data-delay="0.12">
-          <div class="arch-frame arch-frame--inset">
+          <div class="arch-frame arch-frame--inset lqip-wrap" style="--lqip-url:url('images/A3-lq.webp')">
             <picture>
               <source srcset="images/A3-md.webp" type="image/webp" media="(min-width: 768px)">
               <img src="images/A3-sm.webp" alt="Bride in ornate palace corridor with carved sandstone arches" loading="lazy" width="480" height="640">
@@ -139,16 +142,17 @@
       </header>
       <div class="promise-track" role="list">
         <article class="promise-card folio-reveal" role="listitem">
-          <div class="promise-card__img">
+          <div class="promise-card__img lqip-wrap" style="--lqip-url:url('images/A22-lq.webp')">
             <img src="images/A22-sm.webp" alt="Bride portrait at Lake Como with mountains behind" loading="lazy" width="480" height="600">
           </div>
           <div class="promise-card__body">
             <p class="promise-card__eyebrow">You</p>
             <p class="promise-card__line">You have imagined this day since you were a child.</p>
+            <span class="promise-card__beat">1 of 4 beats toward your heirlooms</span>
           </div>
         </article>
         <article class="promise-card folio-reveal" role="listitem" data-delay="0.08">
-          <div class="promise-card__img">
+          <div class="promise-card__img lqip-wrap" style="--lqip-url:url('images/A18-lq.webp')">
             <picture>
               <source srcset="images/A18-md.webp" type="image/webp" media="(min-width: 768px)">
               <img src="images/A18-sm.webp" alt="Sacred wedding ceremony under floral mandap" loading="lazy" width="480" height="600">
@@ -157,10 +161,11 @@
           <div class="promise-card__body">
             <p class="promise-card__eyebrow">The Problem</p>
             <p class="promise-card__line">But the day moves faster than your heart can hold.</p>
+            <span class="promise-card__beat">2 of 4 beats toward your heirlooms</span>
           </div>
         </article>
         <article class="promise-card folio-reveal" role="listitem" data-delay="0.16">
-          <div class="promise-card__img">
+          <div class="promise-card__img lqip-wrap" style="--lqip-url:url('images/A14-lq.webp')">
             <picture>
               <source srcset="images/A14-md.webp" type="image/webp" media="(min-width: 768px)">
               <img src="images/A14-sm.webp" alt="Couple exchanging vows in palace courtyard" loading="lazy" width="480" height="600">
@@ -169,10 +174,11 @@
           <div class="promise-card__body">
             <p class="promise-card__eyebrow">The Guide</p>
             <p class="promise-card__line">I arrive early, stay late, and miss nothing that matters.</p>
+            <span class="promise-card__beat">3 of 4 beats toward your heirlooms</span>
           </div>
         </article>
         <article class="promise-card folio-reveal" role="listitem" data-delay="0.24">
-          <div class="promise-card__img">
+          <div class="promise-card__img lqip-wrap" style="--lqip-url:url('images/A26-lq.webp')">
             <picture>
               <source srcset="images/A26-md.webp" type="image/webp" media="(min-width: 768px)">
               <img src="images/A26-sm.webp" alt="Couple in embrace overlooking Lake Como at sunset" loading="lazy" width="480" height="600">
@@ -181,6 +187,7 @@
           <div class="promise-card__body">
             <p class="promise-card__eyebrow">The Result</p>
             <p class="promise-card__line">Your grandchildren will know exactly how it felt.</p>
+            <span class="promise-card__beat">4 of 4 beats toward your heirlooms</span>
           </div>
         </article>
       </div>
@@ -204,7 +211,7 @@
         </article>
         <article class="promise-grid__item folio-reveal" data-delay="0.08">
           <figure class="promise-grid__figure">
-            <img src="images/A3-sm.webp" alt="Sunlight through carved sandstone arches in a palace corridor" loading="lazy" width="480" height="600">
+            <img src="images/A16-sm.webp" alt="Sunlight through carved sandstone arches in a palace corridor" loading="lazy" width="480" height="600">
           </figure>
           <div class="promise-grid__body">
             <h3 class="promise-grid__headline">A decade inside palace walls.</h3>
@@ -272,14 +279,20 @@
       </header>
 
       <div class="realm-tabs folio-reveal" role="tablist" aria-label="Destination realms">
-        <button type="button" role="tab" id="tab-jaipur" aria-selected="true" aria-controls="realm-jaipur" data-realm="jaipur">Jaipur</button>
-        <button type="button" role="tab" id="tab-tuscany" aria-selected="false" aria-controls="realm-tuscany" data-realm="tuscany">Tuscany</button>
-        <button type="button" role="tab" id="tab-como" aria-selected="false" aria-controls="realm-como" data-realm="como">Lake Como</button>
+        <button type="button" role="tab" id="tab-jaipur" aria-selected="true" aria-controls="realm-jaipur" data-realm="jaipur" tabindex="0">
+          <span class="realm-tab__thumb" style="background-image:url('images/A6-sm.webp')" aria-hidden="true"></span>Jaipur
+        </button>
+        <button type="button" role="tab" id="tab-tuscany" aria-selected="false" aria-controls="realm-tuscany" data-realm="tuscany" tabindex="-1">
+          <span class="realm-tab__thumb" style="background-image:url('images/A8-sm.webp')" aria-hidden="true"></span>Tuscany
+        </button>
+        <button type="button" role="tab" id="tab-como" aria-selected="false" aria-controls="realm-como" data-realm="como" tabindex="-1">
+          <span class="realm-tab__thumb" style="background-image:url('images/A26-sm.webp')" aria-hidden="true"></span>Lake Como
+        </button>
       </div>
 
       <div class="realm-panels">
         <article class="realm-panel is-active" id="realm-jaipur" role="tabpanel" aria-labelledby="tab-jaipur" data-realm="jaipur">
-          <div class="realm-panel__copy folio-reveal">
+          <div class="realm-panel__copy folio-reveal" data-anim="right">
             <h3 class="realm-panel__title">Palace of Dreams</h3>
             <p class="realm-panel__loc">Jaipur, Rajasthan</p>
             <p class="realm-panel__text">She feared the day would blur. Today her family passes down every frame.</p>
@@ -298,7 +311,7 @@
         </article>
 
         <article class="realm-panel" id="realm-tuscany" role="tabpanel" aria-labelledby="tab-tuscany" hidden data-realm="tuscany">
-          <div class="realm-panel__copy folio-reveal">
+          <div class="realm-panel__copy folio-reveal" data-anim="right">
             <h3 class="realm-panel__title">Tuscan Romance</h3>
             <p class="realm-panel__loc">Tuscany, Italy</p>
             <p class="realm-panel__text">A love written across continents — preserved in light she still opens each year.</p>
@@ -317,7 +330,7 @@
         </article>
 
         <article class="realm-panel" id="realm-como" role="tabpanel" aria-labelledby="tab-como" hidden data-realm="como">
-          <div class="realm-panel__copy folio-reveal">
+          <div class="realm-panel__copy folio-reveal" data-anim="right">
             <h3 class="realm-panel__title">Lake Como</h3>
             <p class="realm-panel__loc">Bellagio, Italy</p>
             <p class="realm-panel__text">Still waters. Timeless devotion. A portrait her children already know by heart.</p>
@@ -340,7 +353,7 @@
     <!-- Signature moment -->
     <section class="folio-signature" id="signature" aria-labelledby="signature-title">
       <div class="folio-signature__inner folio-reveal">
-        <div class="arch-frame arch-frame--signature">
+        <div class="arch-frame arch-frame--signature lqip-wrap folio-reveal" data-anim="zoom" style="--lqip-url:url('images/A1-lq.webp')">
           <picture>
             <source srcset="images/A1.webp" type="image/webp" media="(min-width: 768px)">
             <img src="images/A1-sm.webp" alt="Fine art wedding portrait — one photograph, a thousand memories" loading="lazy" width="480" height="600">
@@ -361,33 +374,35 @@
         <p class="folio-body">I show only what matters — a curated story worthy of your wedding, never a flood of forgettable images.</p>
       </header>
       <div class="mosaic-grid">
-        <button type="button" class="mosaic-tile" data-lightbox data-lb="0" aria-label="View Before the world arrives">
-          <picture>
-            <source srcset="images/A17.webp" type="image/webp" media="(min-width: 768px)">
-            <img src="images/A17-sm.webp" alt="Bride in quiet preparation before guests arrive" loading="lazy" width="600" height="750">
-          </picture>
-          <span class="mosaic-tile__cap"><strong>Before the world arrives</strong>Stillness is where your story begins.</span>
+        <button type="button" class="mosaic-tile" data-lightbox data-lb="0" aria-label="View Tuscan grove panorama">
+          <div class="lqip-wrap" style="--lqip-url:url('images/A8-lq.webp')">
+            <picture>
+              <source srcset="images/A8.webp" type="image/webp" media="(min-width: 768px)">
+              <img src="images/A8-md.webp" alt="Couple in Tuscan olive grove at golden hour" loading="lazy" width="1200" height="525">
+            </picture>
+          </div>
+          <span class="mosaic-tile__cap"><strong>Tuscan grove panorama</strong><span class="mosaic-tile__sub">Landscape as heirloom — wide, slow, eternal.</span></span>
         </button>
         <button type="button" class="mosaic-tile" data-lightbox data-lb="1" aria-label="View When joy becomes procession">
           <picture>
             <source srcset="images/A13-md.webp" type="image/webp" media="(min-width: 768px)">
             <img src="images/A13-sm.webp" alt="Groom on decorated horse during baraat procession" loading="lazy" width="600" height="750">
           </picture>
-          <span class="mosaic-tile__cap"><strong>When joy becomes procession</strong>The day you waited for — in motion.</span>
+          <span class="mosaic-tile__cap"><strong>When joy becomes procession</strong><span class="mosaic-tile__sub">The day you waited for — in motion.</span></span>
         </button>
         <button type="button" class="mosaic-tile" data-lightbox data-lb="2" aria-label="View The embrace">
           <picture>
             <source srcset="images/A26-md.webp" type="image/webp" media="(min-width: 768px)">
             <img src="images/A26-sm.webp" alt="Couple in forehead embrace overlooking Lake Como" loading="lazy" width="600" height="750">
           </picture>
-          <span class="mosaic-tile__cap"><strong>The embrace</strong>Love, when it is true, needs no posing.</span>
+          <span class="mosaic-tile__cap"><strong>The embrace</strong><span class="mosaic-tile__sub">Love, when it is true, needs no posing.</span></span>
         </button>
         <button type="button" class="mosaic-tile" data-lightbox data-lb="3" aria-label="View The vows">
           <picture>
             <source srcset="images/A5-md.webp" type="image/webp" media="(min-width: 768px)">
             <img src="images/A5-sm.webp" alt="Bride and groom under marigold mandap" loading="lazy" width="600" height="750">
           </picture>
-          <span class="mosaic-tile__cap"><strong>The vows</strong>Sacred. Unrepeatable. Yours forever.</span>
+          <span class="mosaic-tile__cap"><strong>The vows</strong><span class="mosaic-tile__sub">Sacred. Unrepeatable. Yours forever.</span></span>
         </button>
       </div>
     </section>
@@ -430,8 +445,8 @@
     <!-- 08 Letter — guide portrait + letter format -->
     <section class="folio-letter" id="about" aria-labelledby="letter-title">
       <div class="folio-letter__grid">
-        <figure class="folio-letter__portrait folio-reveal">
-          <div class="arch-frame arch-frame--portrait">
+        <figure class="folio-letter__portrait folio-reveal" data-anim="zoom">
+          <div class="arch-frame arch-frame--portrait lqip-wrap" style="--lqip-url:url('images/A2-lq.webp')">
             <img src="images/A2-sm.webp" alt="Arjun Mehta, luxury fine art wedding photographer" loading="lazy" width="600" height="750">
           </div>
         </figure>
@@ -443,6 +458,7 @@
             <p>I know the fear — you have planned every detail, and you worry the memories will not last.</p>
             <p>For years I have photographed palace weddings in Jaipur and celebrations across Tuscany, Como, and the world.</p>
             <p class="folio-letter__sign">I accept only a handful of weddings each year, so yours is never rushed and never ordinary.</p>
+            <span class="folio-letter__signature" aria-hidden="true">— Arjun Mehta</span>
             <p class="folio-letter__meta">Jaipur, India · Available Worldwide</p>
           </div>
         </div>
@@ -451,7 +467,7 @@
 
     <!-- 09 Commission — invitation card, not dark gradient booking -->
     <section class="folio-commission" id="contact" aria-labelledby="commission-title">
-      <div class="commission-card folio-reveal">
+      <div class="commission-card folio-reveal" style="--commission-bg:url('images/A1-lq.webp')">
         <header class="commission-card__head">
           <p class="kicker kicker--plum">Begin</p>
           <h2 class="folio-display folio-display--sm" id="commission-title">Reserve your commission</h2>
@@ -477,6 +493,8 @@
           </aside>
 
           <form class="commission-form" id="inquiry-form" novalidate>
+            <input type="hidden" name="sourcePath" id="sourcePath" value="">
+            <input type="hidden" name="sourceSection" id="sourceSection" value="">
             <div class="field-row">
               <div class="field">
                 <label class="form-label" for="name">Your names</label>
@@ -538,7 +556,7 @@
 
   <script type="application/json" id="lightbox-data">
   [
-    {"src":"images/A17.webp","cap":"Before the world arrives"},
+    {"src":"images/A8.webp","cap":"Tuscan grove panorama"},
     {"src":"images/A13.webp","cap":"When joy becomes procession"},
     {"src":"images/A26.webp","cap":"The embrace"},
     {"src":"images/A5.webp","cap":"The vows"},
@@ -560,5 +578,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js" defer></script>
   <script src="animations.js" defer></script>
+  <script src="animations-patch.js" defer></script>
 </body>
 </html>
