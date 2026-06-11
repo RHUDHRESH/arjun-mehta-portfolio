@@ -40,7 +40,7 @@
         onComplete: () => {
           intro.classList.add('is-done');
           document.body.classList.remove('is-intro-lock');
-          setTimeout(() => intro.remove(), 400);
+          intro.remove();
           resolve();
         },
       });
@@ -91,6 +91,14 @@
           menu.classList.remove('is-open');
           menu.setAttribute('aria-hidden', 'true');
         });
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && menu.classList.contains('is-open')) {
+          menuBtn.setAttribute('aria-expanded', 'false');
+          menu.classList.remove('is-open');
+          menu.setAttribute('aria-hidden', 'true');
+        }
       });
     }
   }
